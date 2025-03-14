@@ -1,12 +1,12 @@
 import { Router } from "express";
 
 import {
-    getLeaderboard,
-    postLeaderboard,
+    getAllPokemons,
+    createPokemon,
 } from "../controllers/leaderboardcontroller.js"; // rename if needed when controller is done
 
 const router = Router();
 
-router.route("/").get(getLeaderboard).post(postLeaderboard);
+router.route("/").get(getAllPokemons).post(createPokemon);
 
 export default router;
