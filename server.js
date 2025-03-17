@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import "./db/index.js";
 import errorHandler from "./middleware/errorHandler.js";
 import cors from "cors";
+import { PORT, BASE_URL_FRONTEND } from "./config/config.js";
 
 dotenv.config(); 
 
