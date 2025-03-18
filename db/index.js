@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
+import { MONGO_URI } from "../config/config.js";
 console.log("🔍 MONGO_URI:", process.env.MONGO_URI);
-
 // MongoDB Connection
 export const connectDB = async () => {
     try {

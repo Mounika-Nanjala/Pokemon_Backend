@@ -5,6 +5,7 @@ import express from "express";
 import { connectDB } from "./db/index.js";
 import errorHandler from "./middleware/errorHandler.js";
 import cors from "cors";
+import { PORT, BASE_URL_FRONTEND } from "./config/config.js";
 import router from "./routes/leaderboardRouter.js";
 
 const app = express();
