@@ -30,6 +30,12 @@ export const postLeaderboard = asyncHandler(async (req, res) => {
         throw new Error("Username and score are required");
     }
 
-    const newEntry = await Leaderboard.create({ username, score });
-    res.status(201).json(newEntry);
+    // Prüfe, ob der Username bereits existiert und update den Score
+    const existingEntry = await Leaderboard.findOneAndUpdate(
+        { username },
+        { score },
+        { new: true, upsert: true } // Falls nicht gefunden → neuen Eintrag erstellen
+    );
+
+    res.status(201).json(existingEntry);
 });
