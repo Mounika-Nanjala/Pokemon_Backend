@@ -25,17 +25,26 @@ export const getLeaderboard = asyncHandler(async (req, res) => {
 // Add new entry
 export const postLeaderboard = asyncHandler(async (req, res) => {
     const { username, score } = req.body;
+
     if (!username || score === undefined) {
         res.status(400);
         throw new Error("Username and score are required");
     }
 
-    // Prüfe, ob der Username bereits existiert und update den Score
-    const existingEntry = await Leaderboard.findOneAndUpdate(
-        { username },
-        { score },
-        { new: true, upsert: true } // Falls nicht gefunden → neuen Eintrag erstellen
-    );
+    // Prüfen, ob der Benutzer existiert
+    const existingUser = await Leaderboard.findOne({ username });
 
-    res.status(201).json(existingEntry);
+    if (existingUser) {
+        // Score um 100 erhöhen
+        existingUser.score += 100;
+        await existingUser.save();
+        res.status(200).json({
+            message: `${username} already exists. Score updated!`,
+            updatedScore: existingUser.score,
+        });
+    } else {
+        // Neuen Benutzer erstellen
+        const newEntry = await Leaderboard.create({ username, score });
+        res.status(201).json(newEntry);
+    }
 });
