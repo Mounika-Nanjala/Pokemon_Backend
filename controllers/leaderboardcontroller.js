@@ -35,8 +35,8 @@ export const postLeaderboard = asyncHandler(async (req, res) => {
     const existingUser = await Leaderboard.findOne({ username });
 
     if (existingUser) {
-        // Score um 100 erhöhen
-        existingUser.score += 100;
+        // Score increase
+        existingUser.score += score;
         await existingUser.save();
         res.status(200).json({
             message: `${username} already exists. Score updated!`,
